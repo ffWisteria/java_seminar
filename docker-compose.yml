@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./containers/app
+    working_dir: /${PROJECT_NAME}
+    volumes:
+      - ./:/${PROJECT_NAME}
+      - ./build/libs/:/usr/local/tomcat/webapps/
+    ports:
+      - ${APP_PORT}:8080
+
+  db:
+    build:
+      context: ./containers/db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql:/mysql
+    ports:
+      - ${DB_PORT}:3306
+
+volumes:
+  mysql: {}
