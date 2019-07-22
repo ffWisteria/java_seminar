@@ -1,6 +1,7 @@
-<%@ page import="model.user.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../common/import.jsp" %>
+
+<%--<%@ page import="model.user.User" %>--%>
 <%--<%--%>
 <%--    //Servletのデータを受け取る--%>
 <%--    request.setCharacterEncoding("UTF-8");--%>
@@ -19,6 +20,7 @@
 <c:if test="${user != null}">
     <c:out value ="${user.name}"/>
 </c:if>
+
 
 <!DOCTYPE html>
 <html>
