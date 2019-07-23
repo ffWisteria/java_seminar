@@ -1,5 +1,6 @@
-package controller.user;
+package controller.session;
 
+import model.user.Repository;
 import model.user.User;
 
 import javax.servlet.RequestDispatcher;
@@ -10,43 +11,44 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/users/new")
+@WebServlet("/sessions/new")
 public class NewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // リクエストパラメータの文字コードを指定
         request.setCharacterEncoding("UTF-8");
 
-        // リクエストパラメータの取得
-        String name = request.getParameter("name");
+        //String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        //userインスタンスの作成
+        System.out.println(email);
+        System.out.println(password);
+
         User user = new User(
                 null,
                 null,
                 null,
-                name,
+                null,
                 email,
                 password
         );
 
 
-        //userをDBに追加
-        user.createUser();
+        if (user.authenticateUser()) {
+            //リダイレクト
+            response.sendRedirect("/user");
+        } else {
+            //フォワード
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/session/new.jsp");
+            dispatcher.forward(request, response);
+        }
 
-        //リクエストスコープにインスタンスを保存
-        //"user"という名前でuserインスタンスを保存
-        request.setAttribute("user",user);
 
-        // フォワード
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/user/new.jsp");
         dispatcher.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //フォワード
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/user/new.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/session/new.jsp");
         dispatcher.forward(request, response);
     }
 }

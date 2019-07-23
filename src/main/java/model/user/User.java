@@ -45,10 +45,24 @@ public class User extends Default {
         Repository.insertUser(this);
     }
 
+    public boolean authenticateUser() {
+        User persistedUser = Repository.selectUserByEMail(this.email);
+        if (persistedUser == null) {
+            return false;
+        }
+
+        this.hashPassword();
+        if (this.password.equals(persistedUser.password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public static ArrayList<User> indexUsers(){
         return Repository.selectUsers();
     }
-
 
     public void hashPassword(){
         this.password=getHash(this.email,this.password);
@@ -83,4 +97,6 @@ public class User extends Default {
         }
         return stringBuffer.toString();
     }
+
+
 }
