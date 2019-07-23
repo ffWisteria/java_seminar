@@ -34,17 +34,14 @@ public class NewServlet extends HttpServlet {
 
 
         if (user.authenticateUser()) {
-            //リダイレクト
-            response.sendRedirect("/user");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/user/index.jsp");
+            dispatcher.forward(request, response);
         } else {
             //フォワード
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/session/new.jsp");
             dispatcher.forward(request, response);
         }
-
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/user/new.jsp");
-        dispatcher.forward(request, response);
+        
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
