@@ -31,7 +31,6 @@ public class NewServlet extends HttpServlet {
                 password
         );
 
-
         //userをDBに追加
         user.createUser();
 

@@ -30,7 +30,7 @@ services:
       context: ./containers/gradle
     working_dir: /${PROJECT_NAME}
     volumes:
-      - ./${PROJECT_NAME}
+      - ./:/${PROJECT_NAME}
     command: gradle -t build
 
 volumes:

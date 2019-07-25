@@ -3,15 +3,19 @@ package model.user;
 
 import model.Default;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class User extends Default {
-    public String name;
-    public String email;
-    public String password;
+    public final static String currentUserKey = "currentUser";
+
+    private String name;
+    private String email;
+    private String password;
 
     public User(
         String id,
@@ -45,7 +49,7 @@ public class User extends Default {
         Repository.insertUser(this);
     }
 
-    public boolean authenticateUser() {
+    public boolean authenticateUser(HttpServletRequest request) {
         User persistedUser = Repository.selectUserByEMail(this.email);
         if (persistedUser == null) {
             return false;
@@ -53,12 +57,14 @@ public class User extends Default {
 
         this.hashPassword();
         if (this.password.equals(persistedUser.password)) {
+            HttpSession session = request.getSession();
+            session.setAttribute(currentUserKey, persistedUser);
+
             return true;
         } else {
             return false;
         }
     }
-
 
     public static ArrayList<User> indexUsers(){
         return Repository.selectUsers();
@@ -98,5 +104,13 @@ public class User extends Default {
         return stringBuffer.toString();
     }
 
+    public static User getCurrentUser(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return (User) session.getAttribute(currentUserKey);
+    }
 
+    public static void logoutUser(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute(currentUserKey);
+    }
 }
