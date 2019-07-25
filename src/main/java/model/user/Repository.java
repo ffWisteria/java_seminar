@@ -32,9 +32,9 @@ public class Repository extends Client {
             // sql文を入力されてしまった時にデータが消えてしまうかもしれないから
             // 実行するSQL文とパラメータを指定する
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, user.name);//?1
-            preparedStatement.setString(2, user.email);//?2
-            preparedStatement.setString(3, user.password);//?3
+            preparedStatement.setString(1, user.getName());//?1
+            preparedStatement.setString(2, user.getEmail());//?2
+            preparedStatement.setString(3, user.getPassword());//?3
             preparedStatement.setTimestamp(4, currentTime);//?4
             preparedStatement.setTimestamp(5, currentTime);//?5
 
@@ -108,6 +108,43 @@ public class Repository extends Client {
 
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, Integer.parseInt(id));
+
+            resultSet = preparedStatement.executeQuery();
+
+            User user = null;
+            while (resultSet.next()) {
+                user = new User(
+                        String.valueOf(resultSet.getString("id")),
+                        resultSet.getTimestamp("created_at"),
+                        resultSet.getTimestamp("updated_at"),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password")
+                );
+            }
+            return user;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+
+        } finally {
+            close(connection, preparedStatement, resultSet);
+        }
+    }
+
+    public static User selectUserByEMail(String email) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            String sql = "select * from users where email = ?";
+
+            connection = create();
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
 
             resultSet = preparedStatement.executeQuery();
 

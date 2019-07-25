@@ -3,9 +3,9 @@ package model;
 import java.sql.Timestamp;
 
 public class Default {
-    public String id;
-    public Timestamp createdAt;
-    public Timestamp updateAt;
+    private String id;
+    private Timestamp createdAt;
+    private Timestamp updateAt;
 
     public Default(String id, Timestamp createdAt, Timestamp updateAt){
         this.id=id;
