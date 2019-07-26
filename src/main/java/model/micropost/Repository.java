@@ -50,119 +50,119 @@ public class Repository extends Client {
             close(connection, preparedStatement, resultSet);
         }
     }
-
-    public static ArrayList<User> selectUsers() {
-        //Userというクラスの型をリスト化している
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            String sql = "select * from users";
-
-            connection = create();
-
-            preparedStatement = connection.prepareStatement(sql);
-
-            // SQL 文を実行し、結果を保存する
-            resultSet = preparedStatement.executeQuery();
-
-            // 結果を User Entity に整形したうえで、users リストに逐一追加する
-            ArrayList<User> users = new ArrayList<>();
-            while (resultSet.next()) {
-                User user = new User(
-                        String.valueOf(resultSet.getString("id")),
-                        resultSet.getTimestamp("created_at"),
-                        resultSet.getTimestamp("updated_at"),
-                        resultSet.getString("name"),
-                        resultSet.getString("email"),
-                        resultSet.getString("password")
-                );
-                //userというリストにデータを追加する
-                users.add(user);
-            }
-            return users;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-
-        } finally {
-            close(connection, preparedStatement, resultSet);
-        }
-    }
-
-    public static User selectUserByID(String id) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            String sql = "select * from users where id = ?";
-
-            connection = create();
-
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, Integer.parseInt(id));
-
-            resultSet = preparedStatement.executeQuery();
-
-            User user = null;
-            while (resultSet.next()) {
-                user = new User(
-                        String.valueOf(resultSet.getString("id")),
-                        resultSet.getTimestamp("created_at"),
-                        resultSet.getTimestamp("updated_at"),
-                        resultSet.getString("name"),
-                        resultSet.getString("email"),
-                        resultSet.getString("password")
-                );
-            }
-            return user;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-
-        } finally {
-            close(connection, preparedStatement, resultSet);
-        }
-    }
-
-    public static User selectUserByEMail(String email) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            String sql = "select * from users where email = ?";
-
-            connection = create();
-
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, email);
-
-            resultSet = preparedStatement.executeQuery();
-
-            User user = null;
-            while (resultSet.next()) {
-                user = new User(
-                        String.valueOf(resultSet.getString("id")),
-                        resultSet.getTimestamp("created_at"),
-                        resultSet.getTimestamp("updated_at"),
-                        resultSet.getString("name"),
-                        resultSet.getString("email"),
-                        resultSet.getString("password")
-                );
-            }
-            return user;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-
-        } finally {
-            close(connection, preparedStatement, resultSet);
-        }
-    }
 }
+//    public static ArrayList<User> selectUsers() {
+//        //Userというクラスの型をリスト化している
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet = null;
+//
+//        try {
+//            String sql = "select * from users";
+//
+//            connection = create();
+//
+//            preparedStatement = connection.prepareStatement(sql);
+//
+//            // SQL 文を実行し、結果を保存する
+//            resultSet = preparedStatement.executeQuery();
+//
+//            // 結果を User Entity に整形したうえで、users リストに逐一追加する
+//            ArrayList<User> users = new ArrayList<>();
+//            while (resultSet.next()) {
+//                User user = new User(
+//                        String.valueOf(resultSet.getString("id")),
+//                        resultSet.getTimestamp("created_at"),
+//                        resultSet.getTimestamp("updated_at"),
+//                        resultSet.getString("name"),
+//                        resultSet.getString("email"),
+//                        resultSet.getString("password")
+//                );
+//                //userというリストにデータを追加する
+//                users.add(user);
+//            }
+//            return users;
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return null;
+//
+//        } finally {
+//            close(connection, preparedStatement, resultSet);
+//        }
+//    }
+//
+//    public static User selectUserByID(String id) {
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet = null;
+//
+//        try {
+//            String sql = "select * from users where id = ?";
+//
+//            connection = create();
+//
+//            preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setInt(1, Integer.parseInt(id));
+//
+//            resultSet = preparedStatement.executeQuery();
+//
+//            User user = null;
+//            while (resultSet.next()) {
+//                user = new User(
+//                        String.valueOf(resultSet.getString("id")),
+//                        resultSet.getTimestamp("created_at"),
+//                        resultSet.getTimestamp("updated_at"),
+//                        resultSet.getString("name"),
+//                        resultSet.getString("email"),
+//                        resultSet.getString("password")
+//                );
+//            }
+//            return user;
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return null;
+//
+//        } finally {
+//            close(connection, preparedStatement, resultSet);
+//        }
+//    }
+//
+//    public static User selectUserByEMail(String email) {
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet = null;
+//
+//        try {
+//            String sql = "select * from users where email = ?";
+//
+//            connection = create();
+//
+//            preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setString(1, email);
+//
+//            resultSet = preparedStatement.executeQuery();
+//
+//            User user = null;
+//            while (resultSet.next()) {
+//                user = new User(
+//                        String.valueOf(resultSet.getString("id")),
+//                        resultSet.getTimestamp("created_at"),
+//                        resultSet.getTimestamp("updated_at"),
+//                        resultSet.getString("name"),
+//                        resultSet.getString("email"),
+//                        resultSet.getString("password")
+//                );
+//            }
+//            return user;
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return null;
+//
+//        } finally {
+//            close(connection, preparedStatement, resultSet);
+//        }
+//    }
+//}

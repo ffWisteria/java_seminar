@@ -1,5 +1,8 @@
 package controller.micropost;
 
+import model.Default;
+import model.micropost.Micropost;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,22 +19,18 @@ public class NewServlet extends HttpServlet {
 
         // リクエストパラメータの取得
         String content = request.getParameter("content");
-
         Micropost micropost = new Micropost(
                 null,
                 null,
                 null,
-                name,
-                email,
-                password
+                content,
+                null
         );
-
-        //userをDBに追加
-        user.createUser();
+        micropost.createMicropost();
 
         //リクエストスコープにインスタンスを保存
         //"user"という名前でuserインスタンスを保存
-        request.setAttribute("user",user);
+        request.setAttribute("micropost",micropost);
 
         // フォワード
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/user/new.jsp");
