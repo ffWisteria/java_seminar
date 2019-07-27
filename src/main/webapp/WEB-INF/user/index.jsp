@@ -9,6 +9,7 @@
 </head>
 <body>
     <a href="/sessions/delete">ログアウト</a>
+    <a href="/microposts">つぶやき一覧</a>
     <h1>ユーザー一覧</h1>
     ようこそ ! <c:out value="${currentUser.getName()}"/> さん<br>
 

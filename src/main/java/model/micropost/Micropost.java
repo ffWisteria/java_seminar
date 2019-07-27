@@ -3,6 +3,7 @@ package model.micropost;
 import model.Default;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class Micropost extends Default {
     private String content;
@@ -40,6 +41,22 @@ public class Micropost extends Default {
     public void createMicropost() {
         Repository.insertMicropost(this);
     }
+
+    public void updateMicropost() {
+        Repository.updateMicropost(this);
+    }
+
+    public void destroyMicropost(){
+        Repository.deleteMicropost(this);
+    }
+    public static ArrayList<Micropost> indexMyMicropost(String userID){
+        return Repository.selectMyMicropost(userID);
+    }
+
+    public static ArrayList<Micropost> indexOtherMicropost(String userID){
+        return Repository.selectOtherMicropost(userID);
+    }
+
 
 //    public updateMicropost() {
 //

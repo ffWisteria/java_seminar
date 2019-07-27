@@ -2,6 +2,7 @@ package controller.micropost;
 
 import model.Default;
 import model.micropost.Micropost;
+import model.user.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,22 +20,17 @@ public class NewServlet extends HttpServlet {
 
         // リクエストパラメータの取得
         String content = request.getParameter("content");
+
         Micropost micropost = new Micropost(
                 null,
                 null,
                 null,
                 content,
-                null
+                User.getCurrentUser(request).getId()
         );
         micropost.createMicropost();
 
-        //リクエストスコープにインスタンスを保存
-        //"user"という名前でuserインスタンスを保存
-        request.setAttribute("micropost",micropost);
-
-        // フォワード
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/user/new.jsp");
-        dispatcher.forward(request, response);
+        response.sendRedirect("/microposts");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
